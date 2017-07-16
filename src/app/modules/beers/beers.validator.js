@@ -46,7 +46,7 @@
 
             // Object to pass with validation rules
             return {
-                'beer': {
+                
                     'name': {
                         'size': {
                             'min': 2,
@@ -57,7 +57,7 @@
                             'message': 'name is required.'
                         }
                     }
-                }
+                
             };
 
         }

@@ -509,7 +509,7 @@
 
             // Object to pass with validation rules
             return {
-                'beer': {
+                
                     'name': {
                         'size': {
                             'min': 2,
@@ -520,7 +520,7 @@
                             'message': 'name is required.'
                         }
                     }
-                }
+                
             };
 
         }
@@ -565,6 +565,356 @@
 		    }
 		}];
 	}
+
+})();
+
+(function() {
+
+  'use strict';
+    angular
+        .module('craftbeerweb')
+        .controller('beersDestroyCtrl', beersDestroyCtrl);
+    function beersDestroyCtrl(beersFactory, $stateParams,$state) {
+        // Inject with ng-annotate
+        "ngInject";
+
+        var beersDestroy = this;
+        beersDestroy.beer = {};                                                 // Object for show the beer
+        beersDestroy.destroy = destroy;                                         // Delete a resource
+        beersDestroy.msg ="";
+        beersDestroy.cancel = function(){
+            console.log("cancel");
+            $state.go("beers-index");
+        }
+
+        initLog();
+        show($stateParams.id);
+        
+
+        // Sample for init function
+        function initLog() {
+
+            console.log('beersDestroyCtrl init');
+        }
+
+
+        // Delete a resource
+        function destroy(id) {
+        debugger
+            return beersFactory.destroy(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+                 $state.go("beers-index");
+            }, function(data) {
+                beersDestroy.msg ="ocorreu um erro no servidor";
+            	// Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+
+
+        // Get the beer
+        function show(id) {
+            
+            return beersFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                beersDestroy.beer = data;
+
+                return beersDestroy.beer;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the beersShowCtrl to the app
+    angular
+        .module('craftbeerweb')
+        .controller('beersShowCtrl', beersShowCtrl);
+
+
+    // Define the beersShowCtrl
+    function beersShowCtrl(beersFactory, $stateParams,$state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define beersShow as this for ControllerAs and auto-$scope
+        var beersShow = this;
+
+
+        // Define the beersShow functions and objects that will be passed to the view
+        beersShow.beer = {};                                                // Object for show the beer
+        beersShow.cancel = function(){
+            
+            $state.go("beers-index");
+        }
+
+        /*
+        |--------------------------------------------------------------------------
+        | Contrsucts function
+        |--------------------------------------------------------------------------
+        |
+        | All functions that should be init when the controller start
+        |
+        */
+
+
+       
+        show($stateParams.id);
+
+
+
+        // Get the beer
+        function show(id) {
+
+            return beersFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+                
+            	// Assign data to array and return them
+	            beersShow.beer = data;
+	            return beersShow.beer;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the beersIndexCtrl to the app
+    angular
+        .module('craftbeerweb')
+        .controller('beersIndexCtrl', beersIndexCtrl);
+
+    function beersIndexCtrl(beersFactory,$state) {
+
+        // Inject with ng-annotate
+        "ngInject";
+        // Define beersIndex as this for ControllerAs and auto-$scope
+        var beersIndex = this;
+        // Define the beersIndex functions and objects that will be passed to the view
+        beersIndex.beers = [];         // Array for list of beers
+
+        index();
+        beersIndex.msg="";
+        // Get all beers.
+        beersIndex.show = function(id){
+            debugger
+            $state.go("beers-show",{id:id});
+        }
+
+         beersIndex.update = function(id){
+            debugger
+            $state.go("beers-update",{id:id});
+        }
+
+        beersIndex.destroy = function(id){
+            debugger
+            $state.go("beers-destroy",{id:id});
+        }
+
+        beersIndex.store = function(){
+            debugger
+            $state.go("beers-store");
+        }
+
+        function index() {
+            beersIndex.msg = "Carregando dados do Servidor...";
+
+            return beersFactory.index().then(function(data) {
+                debugger
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+                beersIndex.msg = "";
+            	// Assign data to array and return them
+	            beersIndex.beers = data.data;
+	            return beersIndex.beers;
+
+            }, function(data) {
+                beersIndex.msg = "Houve uma falha ao buscar os dados";
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the beersStoreCtrl to the app
+    angular
+        .module('craftbeerweb')
+        .controller('beersStoreCtrl', beersStoreCtrl);
+
+
+    // Define the beersStoreCtrl
+    function beersStoreCtrl(beersFactory,$state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define beersStore as this for ControllerAs and auto-$scope
+        var beersStore = this;
+
+
+        // Define the beersStore functions and objects that will be passed to the view
+        beersStore.store = store;                                           // Store a resource
+        beersStore.msg = "";
+        beersStore.beer = {
+            name:null,
+            ingredients:null,
+            alcoholContent:null,
+            price:null,
+            category:null
+        };
+        
+        beersStore.cancel = function(){
+            console.log("cancel");
+            $state.go("beers-index");
+        }
+
+        // Delete a resource
+        function store(data) {
+            beersStore.msg="Enviando dados para o servidor...";
+            return beersFactory.store(data).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+                $state.go("beers-index");
+            }, function(data) {
+                
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+                beersStore.msg = "Ocorreu um erro ao salvar o dado"
+
+            });
+        }
+    }
+
+})();
+
+(function() {
+
+  'use strict';
+
+    // Pass the beersUpdateCtrl to the app
+    angular
+        .module('craftbeerweb')
+        .controller('beersUpdateCtrl', beersUpdateCtrl);
+
+
+    // Define the beersUpdateCtrl
+    function beersUpdateCtrl(beersFactory, $stateParams,$state) {
+
+
+        // Inject with ng-annotate
+        "ngInject";
+
+
+        // Define beersUpdate as this for ControllerAs and auto-$scope
+        var beersUpdate = this;
+
+
+        // Define the beersUpdate functions and objects that will be passed to the view
+        beersUpdate.beer = {};                                                  // Object for show the beer
+        beersUpdate.update = update;                                            // Update a resource
+        beersUpdate.msg="";  
+
+       
+        beersUpdate.cancel = function(){
+            console.log("cancel");
+            $state.go("beers-index");
+        }
+        initLog();
+        show($stateParams.id);
+
+
+    
+        // Sample for init function
+        function initLog() {
+
+            console.log('beersUpdateCtrl init');
+        }
+
+
+        // Delete a resource
+        function update(id, data) {
+            if(data.name){
+
+                return beersFactory.update(id, data).then(function(data) {
+
+                    // Custom function for success handling
+                    console.log('Result form API with SUCCESS', data);
+                    $state.go("beers-index");
+                }, function(data) {
+                    beersUpdate.msg="Ocorreu um erro: " +data; 
+                    // Custom function for error handling
+                    console.log('Result form API with ERROR', data);
+
+                });
+            }
+            else{
+                beersUpdate.msg = "Preencha o campo nome";
+
+            }
+        }
+
+
+        // Get the beer
+        function show(id) {
+
+            return beersFactory.show(id).then(function(data) {
+
+                // Custom function for success handling
+                console.log('Result form API with SUCCESS', data);
+
+                // Assign data to array and return them
+                beersUpdate.beer = data;
+                return beersUpdate.beer;
+
+            }, function(data) {
+
+                // Custom function for error handling
+                console.log('Result form API with ERROR', data);
+
+            });
+        }
+    }
 
 })();
 
@@ -779,350 +1129,6 @@
 
                 valdrProvider.addConstraints(validator);
             }
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-    angular
-        .module('craftbeerweb')
-        .controller('beersDestroyCtrl', beersDestroyCtrl);
-    function beersDestroyCtrl(beersFactory, $stateParams,$state) {
-        // Inject with ng-annotate
-        "ngInject";
-
-        var beersDestroy = this;
-        beersDestroy.beer = {};                                                 // Object for show the beer
-        beersDestroy.destroy = destroy;                                         // Delete a resource
-        beersDestroy.msg ="";
-        beersDestroy.cancel = function(){
-            console.log("cancel");
-            $state.go("beers-index");
-        }
-
-        initLog();
-        show($stateParams.id);
-        
-
-        // Sample for init function
-        function initLog() {
-
-            console.log('beersDestroyCtrl init');
-        }
-
-
-        // Delete a resource
-        function destroy(id) {
-        debugger
-            return beersFactory.destroy(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                 $state.go("beers-index");
-            }, function(data) {
-                beersDestroy.msg ="ocorreu um erro no servidor";
-            	// Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the beer
-        function show(id) {
-            
-            return beersFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                beersDestroy.beer = data;
-
-                return beersDestroy.beer;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the beersIndexCtrl to the app
-    angular
-        .module('craftbeerweb')
-        .controller('beersIndexCtrl', beersIndexCtrl);
-
-    function beersIndexCtrl(beersFactory,$state) {
-
-        // Inject with ng-annotate
-        "ngInject";
-        // Define beersIndex as this for ControllerAs and auto-$scope
-        var beersIndex = this;
-        // Define the beersIndex functions and objects that will be passed to the view
-        beersIndex.beers = [];         // Array for list of beers
-
-        index();
-        beersIndex.msg="";
-        // Get all beers.
-        beersIndex.show = function(id){
-            debugger
-            $state.go("beers-show",{id:id});
-        }
-
-         beersIndex.update = function(id){
-            debugger
-            $state.go("beers-update",{id:id});
-        }
-
-        beersIndex.destroy = function(id){
-            debugger
-            $state.go("beers-destroy",{id:id});
-        }
-
-        beersIndex.store = function(){
-            debugger
-            $state.go("beers-store");
-        }
-
-        function index() {
-            beersIndex.msg = "Carregando dados do Servidor...";
-
-            return beersFactory.index().then(function(data) {
-                debugger
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                beersIndex.msg = "";
-            	// Assign data to array and return them
-	            beersIndex.beers = data.data;
-	            return beersIndex.beers;
-
-            }, function(data) {
-                beersIndex.msg = "Houve uma falha ao buscar os dados";
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the beersShowCtrl to the app
-    angular
-        .module('craftbeerweb')
-        .controller('beersShowCtrl', beersShowCtrl);
-
-
-    // Define the beersShowCtrl
-    function beersShowCtrl(beersFactory, $stateParams,$state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define beersShow as this for ControllerAs and auto-$scope
-        var beersShow = this;
-
-
-        // Define the beersShow functions and objects that will be passed to the view
-        beersShow.beer = {};                                                // Object for show the beer
-        beersShow.cancel = function(){
-            
-            $state.go("beers-index");
-        }
-
-        /*
-        |--------------------------------------------------------------------------
-        | Contrsucts function
-        |--------------------------------------------------------------------------
-        |
-        | All functions that should be init when the controller start
-        |
-        */
-
-
-       
-        show($stateParams.id);
-
-
-
-        // Get the beer
-        function show(id) {
-
-            return beersFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                
-            	// Assign data to array and return them
-	            beersShow.beer = data;
-	            return beersShow.beer;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the beersStoreCtrl to the app
-    angular
-        .module('craftbeerweb')
-        .controller('beersStoreCtrl', beersStoreCtrl);
-
-
-    // Define the beersStoreCtrl
-    function beersStoreCtrl(beersFactory,$state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define beersStore as this for ControllerAs and auto-$scope
-        var beersStore = this;
-
-
-        // Define the beersStore functions and objects that will be passed to the view
-        beersStore.store = store;                                           // Store a resource
-        beersStore.msg = "";
-        beersStore.beer = {
-            name:null,
-            ingredients:null,
-            alcoholContent:null,
-            price:null,
-            category:null
-        };
-        
-        beersStore.cancel = function(){
-            console.log("cancel");
-            $state.go("beers-index");
-        }
-
-        // Delete a resource
-        function store(data) {
-            beersStore.msg="Enviando dados para o servidor...";
-            return beersFactory.store(data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                $state.go("beers-index");
-            }, function(data) {
-                
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-                beersStore.msg = "Ocorreu um erro ao salvar o dado"
-
-            });
-        }
-    }
-
-})();
-
-(function() {
-
-  'use strict';
-
-    // Pass the beersUpdateCtrl to the app
-    angular
-        .module('craftbeerweb')
-        .controller('beersUpdateCtrl', beersUpdateCtrl);
-
-
-    // Define the beersUpdateCtrl
-    function beersUpdateCtrl(beersFactory, $stateParams,$state) {
-
-
-        // Inject with ng-annotate
-        "ngInject";
-
-
-        // Define beersUpdate as this for ControllerAs and auto-$scope
-        var beersUpdate = this;
-
-
-        // Define the beersUpdate functions and objects that will be passed to the view
-        beersUpdate.beer = {};                                                  // Object for show the beer
-        beersUpdate.update = update;                                            // Update a resource
-        beersUpdate.msg="";  
-
-       
-        beersUpdate.cancel = function(){
-            console.log("cancel");
-            $state.go("beers-index");
-        }
-        initLog();
-        show($stateParams.id);
-
-
-    
-        // Sample for init function
-        function initLog() {
-
-            console.log('beersUpdateCtrl init');
-        }
-
-
-        // Delete a resource
-        function update(id, data) {
-            
-            return beersFactory.update(id, data).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                $state.go("beers-index");
-            }, function(data) {
-                beersUpdate.msg="Ocorreu um erro: " +data; 
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
-        }
-
-
-        // Get the beer
-        function show(id) {
-
-            return beersFactory.show(id).then(function(data) {
-
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-
-                // Assign data to array and return them
-                beersUpdate.beer = data;
-                return beersUpdate.beer;
-
-            }, function(data) {
-
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
-
-            });
         }
     }
 

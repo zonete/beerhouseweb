@@ -44,18 +44,24 @@
 
         // Delete a resource
         function update(id, data) {
-            
-            return beersFactory.update(id, data).then(function(data) {
+            if(data.name){
 
-                // Custom function for success handling
-                console.log('Result form API with SUCCESS', data);
-                $state.go("beers-index");
-            }, function(data) {
-                beersUpdate.msg="Ocorreu um erro: " +data; 
-                // Custom function for error handling
-                console.log('Result form API with ERROR', data);
+                return beersFactory.update(id, data).then(function(data) {
 
-            });
+                    // Custom function for success handling
+                    console.log('Result form API with SUCCESS', data);
+                    $state.go("beers-index");
+                }, function(data) {
+                    beersUpdate.msg="Ocorreu um erro: " +data; 
+                    // Custom function for error handling
+                    console.log('Result form API with ERROR', data);
+
+                });
+            }
+            else{
+                beersUpdate.msg = "Preencha o campo nome";
+
+            }
         }
 
 
