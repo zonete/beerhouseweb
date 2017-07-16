@@ -1,0 +1,38 @@
+<h1>Adicionar Cerveja</h1>
+<div layout="column"class="md-inline-form">
+    <md-content   layout-padding class="">
+        <div style="max-width: 500px">
+            <form name="Form">
+                <md-input-container class="md-block">
+                    <label>Nome</label>
+                    <input ng-model="beersStore.beer.name">
+                </md-input-container>
+
+                 <md-input-container class="md-block">
+                    <label>Ingredientes</label>
+                    <textarea  ng-model="beersStore.beer.ingredients"></textarea>
+                </md-input-container>
+
+                <md-input-container class="md-block">
+                    <label>Conteúdo Alcoólico</label>
+                    <input  ng-model="beersStore.beer.alcoholContent">
+                </md-input-container>
+
+                <md-input-container class="">
+                    <label>Preço</label>
+                    <input type="number"  ng-model="beersStore.beer.price">
+                </md-input-container>
+                <md-input-container class="">
+                    <label>Categoria</label>
+                    <input  ng-model="beersStore.beer.category">
+                </md-input-container>
+                <br/>
+                <md-button class="md-raised md-warn" ng-click="beersStore.cancel()" > Cancelar </md-button>
+                <md-button class="md-raised md-primary" ng-click="beersStore.store(beersStore.beer)"> Salvar </md-button>
+        
+            </form>
+        </div>
+    </md-content>
+    <span>{{beersStore.msg}}</span>
+   
+</div>

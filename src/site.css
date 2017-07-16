@@ -1,0 +1,38 @@
+.active{ font-weight: bold; }
+.boxes{
+    background-color: darkgrey;
+}
+.boxes .info{
+    width: 100%;
+    height: 100%;
+    cursor: pointer
+}
+figcaption{
+    text-align: center
+}
+.text-center{
+    text-align: center
+}
+
+.beerinfo{
+    margin:20px
+}
+.beerinfo span{
+   display: block;
+   line-height: 2;
+   font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+   
+}
+.beerinfo label{
+   font-weight: bold;
+   padding-right: 10px
+}
+
+.errorMsg{
+    color: red;
+    font-weight: bold
+}
+
+.infoCard:hover{
+background-color: cornflowerblue
+}

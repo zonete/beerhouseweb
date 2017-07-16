@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html ng-app="craftbeerweb">
+<head>
+	<base href="/src/">
+	<title>Beer House</title>
+	<link rel="stylesheet" href="../node_modules/angular-material/angular-material.min.css"/>
+	<link rel="stylesheet" href="site.css"/>
+</head>
+<body>
+	<md-toolbar >
+		
+		<section layout="row" layout-sm="column" layout-align="right top" layout-wrap>
+			<section style="margin:auto auto auto 1px">
+				<md-button class="md-raised" aria-label="Home" ui-sref="statics-home" ui-sref-active="active"> Home </md-button>
+				<md-button class="md-raised" aria-label="Cervejas" ui-sref="beers-index" ui-sref-active="active"> Cervejas </md-button> 
+			</section>
+			<section style="margin:auto 30px auto auto">
+				<h2>Beer House</h2>		
+					
+			</section>	
+		</section>
+	</md-toolbar>
+  	<div style="margin:10px" ui-view></div>
+
+</body>
+
+<!-- Modules -->
+<script src="../node_modules/angular/angular.min.js"></script>
+<script src="../node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+<script src="../node_modules/valdr/valdr.min.js"></script>
+<script src="../node_modules/valdr/valdr-message.min.js"></script>
+<script src="../node_modules/angular-mocks/angular-mocks.js" data-server="1.5.0" data-require="angular-mocks@1.5.0"></script>
+<script src="../node_modules/angular-animate/angular-animate.min.js"></script>
+<script src="../node_modules/angular-aria/angular-aria.min.js"></script>
+<script src="../node_modules/angular-material/angular-material.min.js"></script>
+<!-- Angular -->
+<script src="assets/js/app.js"></script>
+
+</html>

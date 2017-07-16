@@ -1,0 +1,21 @@
+<h1> Confirma a exclusão do item abaixo? </h1>
+
+<div class="beerinfo">
+<span><label>Código:</label>{{beersDestroy.beer.id}}<span>
+
+<span><label>Nome:</label>{{beersDestroy.beer.name}}<span>
+
+<span><label>Ingredientes:</label>{{beersDestroy.beer.ingredients}}<span>
+
+<span><label>Conteudo alcoólico:</label>{{beersDestroy.beer.alcoholContent}}<span>
+
+<span><label>Preço:</label>{{beersDestroy.beer.price}}<span>
+
+<span><label>Categoria:</label>{{beersDestroy.beer.category}}<span>
+
+</div> 
+
+<md-button aria-label="Não" class="md-raised md-warn" ng-click="beersDestroy.cancel()"> Não </md-button>
+<md-button aria-label="Sim" class="md-raised md-primary" ng-click="beersDestroy.destroy(beersDestroy.beer.id)"> Sim </md-button>
+<br/>
+{{ beersDestroy.msg }}

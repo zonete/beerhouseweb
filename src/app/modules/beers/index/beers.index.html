@@ -1,0 +1,47 @@
+
+<h1>Aqui está a lista das nossas Cervejas </h1>
+<md-button ng-click="beersIndex.store()" class="md-raised md-primary" > [ + ] Adicionar</md-button> 
+
+ <md-content class="md-padding">
+    <div layout="column">
+      <md-card class="infoCard" ng-repeat="beer in beersIndex.beers">
+           <md-tooltip md-direction="top">Clique para visualizar</md-tooltip>
+          {{ beer.ToString() }}
+        <md-card-title >
+          <md-card-title-text style="cursor:pointer" ng-click="beersIndex.show(beer.id)">
+            <span class="md-headline">{{ beer.name }}</span>
+            <span class="md-subhead">{{beer.ingredients}}</span>
+          </md-card-title-text>
+           <md-button aria-label="button-label" ng-click="beersIndex.update(beer.id)" class=" md-raised">     
+                Editar
+            </md-button>
+            <md-button aria-label="button-label" ng-click="beersIndex.destroy(beer.id)" class="md-raised md-warn">          
+                Deletar
+            </md-button>
+        </md-card-title>
+       
+      </md-card>
+    </div>
+ </md-content>
+{{beersIndex.msg }}
+
+<!--<md-grid-list 
+        md-cols-xs="1" md-cols-sm="2" md-cols-md="4" md-cols-gt-md="6"
+        md-row-height-gt-md="1:1" md-row-height="2:2"
+        md-gutter="12px" md-gutter-gt-sm="8px" >
+
+    <md-grid-tile class="boxes"  ng-repeat="beer in beersIndex.beers">
+        <div class="info" ng-click="beersIndex.show(beer.id)">
+          {{ beer.name }}
+        </div>
+        
+      <md-grid-tile-footer >
+       <md-button aria-label="button-label" ng-click="beersIndex.update(id)" class=" md-raised">     
+          Editar
+       </md-button>
+       <md-button aria-label="button-label" ng-click="beersIndex.destroy(id)" class="md-raised md-warn">          
+          Deletar
+       </md-button>
+      </md-grid-tile-footer>
+    </md-grid-tile>
+</md-grid-list>-->
